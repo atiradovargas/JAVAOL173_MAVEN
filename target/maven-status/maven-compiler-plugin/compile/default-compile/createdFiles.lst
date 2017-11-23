@@ -1,0 +1,8 @@
+com\grupoatrium\modelo\Autor.class
+com\grupoatrium\modelo\Libro.class
+com\grupoatrium\persistencia\impl\LibrosDAO.class
+com\grupoatrium\modelo\Editorial.class
+com\grupoatrium\persistencia\impl\ConnectionMgr.class
+com\grupoatrium\cliente\Main.class
+com\grupoatrium\modelo\Direccion.class
+com\grupoatrium\persistencia\impl\EditorialesDAO.class

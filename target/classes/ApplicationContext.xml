@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+
+	<import resource="Conexion.xml"/>
+
+	<bean id="direccion1" class="com.grupoatrium.modelo.Direccion">
+		<property name="calle" value="C/ Blazquilla"/>
+		<property name="numero" value="16"/>
+		<property name="poblacion" value="Galapagar"/>
+		<property name="cp" value="28260"/>
+		<property name="provincia" value="Madrid"/>
+	</bean>
+	
+	<bean id="direccion2" class="com.grupoatrium.modelo.Direccion">
+		<property name="calle">
+			<value type="java.lang.String">C/ Peñalara</value>
+		</property>
+		<property name="numero">
+			<value type="int">28</value>
+		</property>
+		<property name="poblacion">
+			<value type="java.lang.String">Galapagar</value>
+		</property>
+		<property name="cp">
+			<value type="int">28240</value>
+		</property>
+		<property name="provincia">
+			<value type="java.lang.String">Madrid</value>
+		</property>		
+	</bean>
+	
+	<!-- Inyeccion por propiedades -->
+	<bean id="editorial1" class="com.grupoatrium.modelo.Editorial">
+		<property name="nombre" value="Susaeta" />
+		<property name="direccion" ref="direccion1" />
+		<property name="nif" value="00000001B" />
+	</bean>
+	
+	<bean id="editorial2" class="com.grupoatrium.modelo.Editorial">
+		<property name="nombre" value="Anaya" />
+		<property name="direccion" ref="direccion2" />
+		<property name="nif" value="00000002B" />
+	</bean>
+	
+	<!-- Con namespace p -->
+	<bean id="editorial3" class="com.grupoatrium.modelo.Editorial"
+		p:nombre="Norma"
+		p:direccion-ref="direccion2"
+		p:nif="00000003B">
+	</bean>	
+	
+	<!-- Inyeccion por constructor con argumentos -->
+	<bean id="autor1" class="com.grupoatrium.modelo.Autor">
+		<constructor-arg value="Gabriel Garcia Marquez"/>
+		<constructor-arg value="Colombiana"/>
+		<constructor-arg value="Gabo"/>
+	</bean>
+	
+	<!-- Inyeccion por constructor con argumentos resolucion de ambigüedades -->
+	<bean id="autor2" class="com.grupoatrium.modelo.Autor">
+		<constructor-arg type="java.lang.String" value="Arturo Perez Reverte"/>
+		<constructor-arg type="java.lang.String" value="Española"/>
+		<constructor-arg type="java.lang.String" value="Alatriste"/>
+	</bean>
+	
+	<!-- Inyeccion por constructor con argumentos por indice o posicion-->
+	<bean id="autor3" class="com.grupoatrium.modelo.Autor">
+		<constructor-arg index="0" value="Patrick Rothfuss"/>
+		<constructor-arg index="1" value="Americana"/>
+		<constructor-arg index="2" value="Kvothe"/>
+	</bean>
+	
+	<bean id="autor4" class="com.grupoatrium.modelo.Autor">
+		<constructor-arg type="java.lang.String" value="Carlota Perez Reverte"/>
+		<constructor-arg type="java.lang.String" value="Española"/>
+		<constructor-arg type="java.lang.String" value="Alatriste"/>
+	</bean>	
+	
+	
+	<util:list id="revertes" value-type="com.grupoatrium.modelo.Autor">
+		<ref bean="autor2"/>
+		<ref bean="autor4"/>
+	</util:list>
+	
+	<bean id="libro1" class="com.grupoatrium.modelo.Libro">
+		<property name="isnb" value="00000000000001"/>
+		<property name="titulo" value="La música del silencio"/>
+		<property name="editorial" ref="editorial1"/>
+		<property name="autores">
+			<util:list value-type="com.grupoatrium.modelo.Autor">
+				<ref bean="autor3"/>
+			</util:list>
+		</property>
+		<property name="publicacion" value="2015" />
+		<property name="precio" value="15.5" />
+		<property name="descripcion" value="Libro mas lento que el caballo del malo sobre Ahri." />
+	</bean>
+
+	<bean id="libro2" class="com.grupoatrium.modelo.Libro">
+		<property name="isnb" value="00000000000002"/>
+		<property name="titulo" value="El capitán alatriste"/>
+		<property name="editorial" ref="editorial2"/>
+		<property name="autores" ref="revertes" />
+		<property name="publicacion" value="2009" />
+		<property name="precio" value="9.5" />
+		<property name="descripcion" value="Las aventuras del capitán Alatriste e Iñigo de Balboa." />
+	</bean>	
+
+</beans>
